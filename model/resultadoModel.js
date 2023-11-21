@@ -12,7 +12,7 @@ const resultadoSchema = new Schema(
       required: true,
     },
     observacion: {
-      type: int,
+      type: String,
       required: true,
     },
   },

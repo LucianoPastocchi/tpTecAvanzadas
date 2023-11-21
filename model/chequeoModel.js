@@ -12,7 +12,7 @@ const resultadoSchema = new Schema(
       required: true,
     },
     descripcion: {
-      type: int,
+      type: String,
       required: true,
     },
   },

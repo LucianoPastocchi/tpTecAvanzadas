@@ -8,7 +8,7 @@ const getAllTurnos = async (limit, offset) => {
 };
 
 const getTurno = async (id) => {
-  const turno = await Turno.findOne({ email: id });
+  const turno = await Turno.findOne({ _id: id });
   return turno;
 };
 

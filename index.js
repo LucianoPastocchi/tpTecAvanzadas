@@ -9,9 +9,10 @@ const uri = process.env.MONGO_URI;
 
 const UsrController = require("./controllers/userController");
 const TurnoController = require("./controller/turnoController.js");
-const CharactersController = require("./controllers/characterController");
-const Middleware = require("./middleware/authMiddleware.js");
-const Turno = require("./model/turnoModel.js");
+const VehiculoController = require("./controller/vehiculoController.js");
+const DuenioVehiculoController = require("./controller/duenioVehiculoController.js");
+const ResultadoController = require("./controller/resultadoController.js");
+const ChequeoController = require("./controller/chequeoController.js");
 
 //Conexión a la base
 mongoose
@@ -274,6 +275,375 @@ app.delete(
         res.status(200).send("Turno borrado.");
       } else {
         res.status(404).send("No se ha podido eliminar el turno.");
+      }
+    } catch (error) {
+      res.status(500).send("Error");
+    }
+  }
+);
+
+//-------------------------------------------------------------------------------------------------------
+// ENDPOINTS Vehiculo
+//-------------------------------------------------------------------------------------------------------
+
+//Get de todos los vehiculos
+app.get("/vehiculo", async (req, res) => {
+  let limit = req.query.limit;
+  let offset = req.query.offset;
+
+  try {
+    const results = await VehiculoController.getAllVehiculos(limit, offset);
+    res.status(200).json(results);
+  } catch (error) {
+    res.status(500).send("Error. Intente más tarde");
+  }
+});
+
+//Get info de un vehiculo
+app.get(
+  "/vehiculos/:id",
+  /*Middleware.verify*/ async (req, res) => {
+    let vehiculoId = req.params.id;
+
+    try {
+      vehiculo = await VehiculoController.getVehiculo(vehiculoId);
+      res.status(200).json(vehiculo);
+    } catch (error) {
+      res.status(500).send("Error. Intente más tarde");
+    }
+  }
+);
+
+//Creo nuevo vehiculo
+app.post(
+  "/vehiculos/create",
+  /*Middleware.verify*/ async (req, res) => {
+    let patente = req.body.patente;
+    let duenioVehiculo = req.body.duenioVehiculo;
+
+    try {
+      const result = await VehiculoController.createVehiculo(
+        patente,
+        duenioVehiculo
+      );
+      if (result) {
+        res.status(201).send("Vehiculo creado correctamente");
+      }
+    } catch (error) {
+      res.status(500).send("Error al crear el turno");
+    }
+  }
+);
+
+//Edito vehiculo
+app.put(
+  "/vehiculos/:id/edit",
+  /*Middleware.verify*/ async (req, res) => {
+    const vehiculo = { _id: req.params.id, ...req.body };
+
+    try {
+      const result = await VehiculoController.editVehiculo(vehiculo);
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).send("El vehiculo no existe");
+      }
+    } catch (error) {
+      res.status(500).send("Error");
+    }
+  }
+);
+
+//Elimino vehiculo
+app.delete(
+  "/vehiculos/:id/delete",
+  /*Middleware.verify*/ async (req, res) => {
+    try {
+      const result = await VehiculoController.deleteVehiculo(req.params.id);
+      if (result) {
+        res.status(200).send("Vehiculo borrado.");
+      } else {
+        res.status(404).send("No se ha podido eliminar el vehiculo.");
+      }
+    } catch (error) {
+      res.status(500).send("Error");
+    }
+  }
+);
+
+//-------------------------------------------------------------------------------------------------------
+// ENDPOINTS DuenioVehiculo
+//-------------------------------------------------------------------------------------------------------
+
+//Get de todos los duenios vehiculos
+app.get("/duenioVehiculo", async (req, res) => {
+  let limit = req.query.limit;
+  let offset = req.query.offset;
+
+  try {
+    const results = await DuenioVehiculoController.getAllDueniosVehiculo(
+      limit,
+      offset
+    );
+    res.status(200).json(results);
+  } catch (error) {
+    res.status(500).send("Error. Intente más tarde");
+  }
+});
+
+//Get info de un duenio vehiculo
+app.get(
+  "/duenioVehiculo/:id",
+  /*Middleware.verify*/ async (req, res) => {
+    let duenioVehiculoId = req.params.id;
+
+    try {
+      duenioVehiculoId = await DuenioVehiculoController.getDuenioVehiculo(
+        duenioVehiculoId
+      );
+      res.status(200).json(duenioVehiculoId);
+    } catch (error) {
+      res.status(500).send("Error. Intente más tarde");
+    }
+  }
+);
+
+//Creo nuevo duenio vehiculo
+app.post(
+  "/dueniosVehiculo/create",
+  /*Middleware.verify*/ async (req, res) => {
+    let DNI = req.body.patente;
+    let vehiculo = req.body.vehiculo;
+
+    try {
+      const result = await DuenioVehiculoController.addVehiculo(
+        patente,
+        vehiculo
+      );
+      if (result) {
+        res.status(201).send("Duenio vehiculo creado correctamente");
+      }
+    } catch (error) {
+      res.status(500).send("Error al crear el turno");
+    }
+  }
+);
+
+//Edito duenio vehiculo
+app.put(
+  "/dueniosVehiculo/:id/edit",
+  /*Middleware.verify*/ async (req, res) => {
+    const duenioVehiculo = { _id: req.params.id, ...req.body };
+
+    try {
+      const result = await DuenioVehiculoController.editDuenioVehiculo(
+        duenioVehiculo
+      );
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).send("El duenio vehiculo no existe");
+      }
+    } catch (error) {
+      res.status(500).send("Error");
+    }
+  }
+);
+
+//Elimino duenio vehiculo
+app.delete(
+  "/dueniosVehiculo/:id/delete",
+  /*Middleware.verify*/ async (req, res) => {
+    try {
+      const result = await DuenioVehiculoController.deleteDuenioVehiculo(
+        req.params.id
+      );
+      if (result) {
+        res.status(200).send("Duenio vehiculo borrado.");
+      } else {
+        res.status(404).send("No se ha podido eliminar el duenio vehiculo.");
+      }
+    } catch (error) {
+      res.status(500).send("Error");
+    }
+  }
+);
+
+//-------------------------------------------------------------------------------------------------------
+// ENDPOINTS Resultado
+//-------------------------------------------------------------------------------------------------------
+
+//Get de todos los resultados
+app.get("/resultado", async (req, res) => {
+  let limit = req.query.limit;
+  let offset = req.query.offset;
+
+  try {
+    const results = await ResultadoController.getAllResultados(limit, offset);
+    res.status(200).json(results);
+  } catch (error) {
+    res.status(500).send("Error. Intente más tarde");
+  }
+});
+
+//Get info de un resultado
+app.get(
+  "/resultado/:id",
+  /*Middleware.verify*/ async (req, res) => {
+    let resultadoId = req.params.id;
+
+    try {
+      resultadoId = await ResultadoController.getDuenioVehiculo(resultadoId);
+      res.status(200).json(resultadoId);
+    } catch (error) {
+      res.status(500).send("Error. Intente más tarde");
+    }
+  }
+);
+
+//Creo nuevo resultado
+app.post(
+  "/resultado/create",
+  /*Middleware.verify*/ async (req, res) => {
+    let turno = req.body.patente;
+    let puntaje = req.body.vehiculo;
+    let observacion = req.body.observacion;
+
+    try {
+      const result = await ResultadoController.addResultado(
+        turno,
+        puntaje,
+        observacion
+      );
+      if (result) {
+        res.status(201).send("Resultado creado correctamente");
+      }
+    } catch (error) {
+      res.status(500).send("Error al crear el turno");
+    }
+  }
+);
+
+//Edito resultado
+app.put(
+  "/resultado/:id/edit",
+  /*Middleware.verify*/ async (req, res) => {
+    const resultado = { _id: req.params.id, ...req.body };
+
+    try {
+      const result = await ResultadoController.editResultado(resultado);
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).send("El resultado no existe");
+      }
+    } catch (error) {
+      res.status(500).send("Error");
+    }
+  }
+);
+
+//Elimino resultado
+app.delete(
+  "/resultado/:id/delete",
+  /*Middleware.verify*/ async (req, res) => {
+    try {
+      const result = await ResultadoController.deleteResultado(req.params.id);
+      if (result) {
+        res.status(200).send("Resultado borrado.");
+      } else {
+        res.status(404).send("No se ha podido eliminar el resultado");
+      }
+    } catch (error) {
+      res.status(500).send("Error");
+    }
+  }
+);
+
+//-------------------------------------------------------------------------------------------------------
+// ENDPOINTS Chequeo
+//-------------------------------------------------------------------------------------------------------
+
+//Get de todos los chequeos
+app.get("/chequeo", async (req, res) => {
+  let limit = req.query.limit;
+  let offset = req.query.offset;
+
+  try {
+    const results = await ChequeoController.getAllChequeos(limit, offset);
+    res.status(200).json(results);
+  } catch (error) {
+    res.status(500).send("Error. Intente más tarde");
+  }
+});
+
+//Get info de un chequeo
+app.get(
+  "/chequeo/:id",
+  /*Middleware.verify*/ async (req, res) => {
+    let chequeoId = req.params.id;
+
+    try {
+      chequeoId = await ChequeoController.getChequeo(chequeoId);
+      res.status(200).json(chequeoId);
+    } catch (error) {
+      res.status(500).send("Error. Intente más tarde");
+    }
+  }
+);
+
+//Creo nuevo chequeo
+app.post(
+  "/chequeo/create",
+  /*Middleware.verify*/ async (req, res) => {
+    let resultado = req.body.resultado;
+    let puntajeNuevo = req.body.puntajeNuevo;
+    let descripcion = req.body.descripcion;
+
+    try {
+      const result = await ChequeoController.addChequeo(
+        resultado,
+        puntajeNuevo,
+        descripcion
+      );
+      if (result) {
+        res.status(201).send("Chequeo creado correctamente");
+      }
+    } catch (error) {
+      res.status(500).send("Error al crear el chequeo");
+    }
+  }
+);
+
+//Edito chequeo
+app.put(
+  "/chequeo/:id/edit",
+  /*Middleware.verify*/ async (req, res) => {
+    const chequeo = { _id: req.params.id, ...req.body };
+
+    try {
+      const result = await ChequeoController.editChequeo(chequeo);
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).send("El chequeo no existe");
+      }
+    } catch (error) {
+      res.status(500).send("Error");
+    }
+  }
+);
+
+//Elimino chequeo
+app.delete(
+  "/chequeo/:id/delete",
+  /*Middleware.verify*/ async (req, res) => {
+    try {
+      const result = await ChequeoController.deleteChequeo(req.params.id);
+      if (result) {
+        res.status(200).send("Chequeo borrado.");
+      } else {
+        res.status(404).send("No se ha podido eliminar el chequeo");
       }
     } catch (error) {
       res.status(500).send("Error");
