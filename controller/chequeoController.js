@@ -13,13 +13,13 @@ const getChequeo = async (id) => {
 };
 
 const addChequeo = async (nroTurno, puntajeNuevo, descripcion) => {
-  const Chequeo = new Chequeo({
+  const check = new Chequeo({
     nroTurno: nroTurno,
     puntajeNuevo: puntajeNuevo,
     descripcion: descripcion,
   });
 
-  let chequeo = await Chequeo.save();
+  let chequeo = await check.save();
   console.log("chequeo creado");
   console.log(chequeo);
   return { chequeo };

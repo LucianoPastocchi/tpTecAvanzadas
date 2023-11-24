@@ -12,14 +12,14 @@ const getResultado = async (id) => {
   return resultado;
 };
 
-const addResultado = async (turno, puntaje, observacion) => {
-  const Resultado = new Resultado({
-    turno: turno,
+const addResultado = async (nroTurno, puntaje, observacion) => {
+  const result = new Resultado({
+    nroTurno: nroTurno,
     puntaje: puntaje,
     observacion: observacion,
   });
 
-  let resultado = await Resultado.save();
+  let resultado = await result.save();
   console.log("resultado creado");
   console.log(resultado);
   return { resultado };

@@ -501,13 +501,13 @@ app.get(
 app.post(
   "/resultado/create",
   /*Middleware.verify*/ async (req, res) => {
-    let turno = req.body.patente;
-    let puntaje = req.body.vehiculo;
+    let nroTurno = req.body.nroTurno;
+    let puntaje = req.body.puntaje;
     let observacion = req.body.observacion;
 
     try {
       const result = await ResultadoController.addResultado(
-        turno,
+        nroTurno,
         puntaje,
         observacion
       );
@@ -515,7 +515,7 @@ app.post(
         res.status(201).send("Resultado creado correctamente");
       }
     } catch (error) {
-      res.status(500).send("Error al crear el turno");
+      res.status(500).send("Error al crear el resultado");
     }
   }
 );

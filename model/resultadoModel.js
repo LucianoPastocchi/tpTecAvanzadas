@@ -2,9 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const resultadoSchema = new Schema(
   {
-    turno: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Turno",
+    nroTurno: {
+      type: String,
       required: true,
     },
     puntaje: {
