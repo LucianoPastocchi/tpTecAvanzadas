@@ -12,8 +12,9 @@ const getTurno = async (id) => {
   return turno;
 };
 
-const addTurno = async (fecha, hora, usuario, patenteVehiculo) => {
+const addTurno = async (nroTurno, fecha, hora, usuario, patenteVehiculo) => {
   const turn = new Turno({
+    nroTurno: nroTurno,
     fecha: fecha,
     hora: hora,
     usuario: usuario,

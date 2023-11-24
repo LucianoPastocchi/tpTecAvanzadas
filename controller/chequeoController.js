@@ -12,9 +12,9 @@ const getChequeo = async (id) => {
   return chequeo;
 };
 
-const addChequeo = async (resultado, puntajeNuevo, descripcion) => {
+const addChequeo = async (nroTurno, puntajeNuevo, descripcion) => {
   const Chequeo = new Chequeo({
-    resultado: resultado,
+    nroTurno: nroTurno,
     puntajeNuevo: puntajeNuevo,
     descripcion: descripcion,
   });

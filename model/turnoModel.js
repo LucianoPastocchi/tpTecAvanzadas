@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const turnoSchema = new Schema(
   {
+    nroTurno: {
+      type: String,
+      required: true,
+    },
     fecha: {
       type: String,
       required: true,

@@ -219,6 +219,7 @@ app.get(
 app.post(
   "/turnos/create",
   /*Middleware.verify*/ async (req, res) => {
+    let nroTurno = req.body.nroTurno;
     let fecha = req.body.fecha;
     let hora = req.body.hora;
     let usuario = req.body.usuario;
@@ -226,6 +227,7 @@ app.post(
 
     try {
       const result = await TurnoController.addTurno(
+        nroTurno,
         fecha,
         hora,
         usuario,
@@ -590,13 +592,13 @@ app.get(
 app.post(
   "/chequeo/create",
   /*Middleware.verify*/ async (req, res) => {
-    let resultado = req.body.resultado;
+    let nroTurno = req.body.nroTurno;
     let puntajeNuevo = req.body.puntajeNuevo;
     let descripcion = req.body.descripcion;
 
     try {
       const result = await ChequeoController.addChequeo(
-        resultado,
+        nroTurno,
         puntajeNuevo,
         descripcion
       );
