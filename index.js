@@ -3,11 +3,11 @@ const app = express();
 const mongoose = require("mongoose");
 const http = require("http").createServer(app);
 const cors = require("cors");
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "./.env" });
 const PORT = process.env.PORT;
 const uri = process.env.MONGO_URI;
 
-const UsrController = require("./controllers/userController");
+const UsrController = require("./controller/userController");
 const TurnoController = require("./controller/turnoController.js");
 const VehiculoController = require("./controller/vehiculoController.js");
 const DuenioVehiculoController = require("./controller/duenioVehiculoController.js");
@@ -90,21 +90,15 @@ app.get(
 app.post(
   "/users/create",
   /*Middleware.verify*/ async (req, res) => {
-    let name = req.body.name;
-    let lastname = req.body.lastname;
     let email = req.body.email;
-    let isActive = req.body.isActive;
     let password = req.body.password;
-    let myCharacters = req.body.myCharacters;
+    let fecNacimiento = req.body.fecNacimiento;
 
     try {
       const result = await UsrController.addUser(
-        name,
-        lastname,
         email,
-        isActive,
         password,
-        myCharacters
+        fecNacimiento
       );
       if (result) {
         res.status(201).send("Usuario creado correctamente");
@@ -226,15 +220,15 @@ app.post(
   "/turnos/create",
   /*Middleware.verify*/ async (req, res) => {
     let fecha = req.body.fecha;
+    let hora = req.body.hora;
     let usuario = req.body.usuario;
-    let vehiculo = req.body.vehiculo;
     let patenteVehiculo = req.body.patenteVehiculo;
 
     try {
-      const result = await TurnoController.createTurno(
+      const result = await TurnoController.addTurno(
         fecha,
+        hora,
         usuario,
-        vehiculo,
         patenteVehiculo
       );
       if (result) {
@@ -322,7 +316,7 @@ app.post(
     let duenioVehiculo = req.body.duenioVehiculo;
 
     try {
-      const result = await VehiculoController.createVehiculo(
+      const result = await VehiculoController.addVehiculo(
         patente,
         duenioVehiculo
       );
@@ -330,7 +324,7 @@ app.post(
         res.status(201).send("Vehiculo creado correctamente");
       }
     } catch (error) {
-      res.status(500).send("Error al crear el turno");
+      res.status(500).send("Error al crear el vehiculo" + duenioVehiculo);
     }
   }
 );
@@ -412,19 +406,19 @@ app.get(
 app.post(
   "/dueniosVehiculo/create",
   /*Middleware.verify*/ async (req, res) => {
-    let DNI = req.body.patente;
-    let vehiculo = req.body.vehiculo;
+    let DNI = req.body.DNI;
+    let patente = req.body.patente;
 
     try {
-      const result = await DuenioVehiculoController.addVehiculo(
-        patente,
-        vehiculo
+      const result = await DuenioVehiculoController.addDuenioVehiculo(
+        DNI,
+        patente
       );
       if (result) {
         res.status(201).send("Duenio vehiculo creado correctamente");
       }
     } catch (error) {
-      res.status(500).send("Error al crear el turno");
+      res.status(500).send("Error al crear el duenio vehiculo");
     }
   }
 );

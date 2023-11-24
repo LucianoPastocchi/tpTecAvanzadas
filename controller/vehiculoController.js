@@ -13,12 +13,12 @@ const getVehiculo = async (id) => {
 };
 
 const addVehiculo = async (patente, duenioVehiculo) => {
-  const Vehiculo = new Vehiculo({
+  const rodado = new Vehiculo({
     patente: patente,
     duenioVehiculo: duenioVehiculo,
   });
 
-  let vehiculo = await Vehiculo.save();
+  let vehiculo = await rodado.save();
   console.log("vehiculo creado");
   console.log(vehiculo);
   return { vehiculo };

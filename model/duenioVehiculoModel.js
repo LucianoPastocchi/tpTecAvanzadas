@@ -3,12 +3,11 @@ const Schema = mongoose.Schema;
 const duenioVehiculoSchema = new Schema(
   {
     DNI: {
-      type: int,
+      type: String,
       required: true,
     },
-    vehiculo: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Vehiculo",
+    patente: {
+      type: String,
       required: true,
     },
   },
@@ -20,5 +19,5 @@ const duenioVehiculoSchema = new Schema(
   },
 });
 
-const duenioVehiculo = mongoose.model("duenioVehiculo", duenioVehiculoSchema);
-module.exports = duenioVehiculo;
+const DuenioVehiculo = mongoose.model("duenioVehiculo", duenioVehiculoSchema);
+module.exports = DuenioVehiculo;

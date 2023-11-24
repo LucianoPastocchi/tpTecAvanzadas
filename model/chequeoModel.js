@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const resultadoSchema = new Schema(
+const chequeoSchema = new Schema(
   {
     resultado: {
       type: mongoose.Schema.Types.ObjectId,
@@ -8,7 +8,7 @@ const resultadoSchema = new Schema(
       required: true,
     },
     puntajeNuevo: {
-      type: int,
+      type: Number,
       required: true,
     },
     descripcion: {
@@ -24,5 +24,5 @@ const resultadoSchema = new Schema(
   },
 });
 
-const Chequeo = mongoose.model("chequeo", chequeoSchema);
-module.exports = Chequeo;
+const ChequeoModel = mongoose.model("chequeo", chequeoSchema);
+module.exports = ChequeoModel;

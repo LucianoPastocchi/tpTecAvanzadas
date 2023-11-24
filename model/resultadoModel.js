@@ -8,7 +8,7 @@ const resultadoSchema = new Schema(
       required: true,
     },
     puntaje: {
-      type: int,
+      type: Number,
       required: true,
     },
     observacion: {

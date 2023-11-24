@@ -1,6 +1,5 @@
 require("mongoose");
 const Chequeo = require("../model/chequeoModel");
-const Chequeo = require("../model/chequeoModel");
 
 const getAllChequeos = async (limit, offset) => {
   const chequeos = await Chequeo.find({}).limit(limit).skip(offset);

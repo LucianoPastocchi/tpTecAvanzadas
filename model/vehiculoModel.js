@@ -7,8 +7,7 @@ const vehiculoSchema = new Schema(
       required: true,
     },
     duenioVehiculo: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "DuenioVehiculo",
+      type: String,
       required: true,
     },
   },

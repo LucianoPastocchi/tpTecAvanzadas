@@ -1,5 +1,5 @@
 require("mongoose");
-const Usr = require("../models/userModel");
+const Usr = require("../model/userModel");
 
 const getAllUsers = async (limit, offset) => {
   const users = await Usr.find({}).limit(limit).skip(offset);
@@ -12,14 +12,7 @@ const getUser = async (id) => {
   return user;
 };
 
-const addUser = async (
-  name,
-  lastname,
-  email,
-  isActive,
-  password,
-  myCharacters
-) => {
+const addUser = async (email, password, fecNacimiento) => {
   let existUser = await Usr.findOne({ email: email });
   if (!existUser) {
     const cryptoPass = require("crypto")
@@ -28,12 +21,9 @@ const addUser = async (
       .digest("hex");
 
     const usr = new Usr({
-      name: name,
-      lastname: lastname,
       email: email,
-      isActive: isActive,
       password: cryptoPass,
-      myCharacters: myCharacters,
+      fecNacimiento: fecNacimiento,
     });
 
     let user = await usr.save();

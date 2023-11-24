@@ -12,15 +12,15 @@ const getTurno = async (id) => {
   return turno;
 };
 
-const addTurno = async (fecha, usuario, vehiculo, patenteVehiculo) => {
-  const Turno = new Turno({
+const addTurno = async (fecha, hora, usuario, patenteVehiculo) => {
+  const turn = new Turno({
     fecha: fecha,
+    hora: hora,
     usuario: usuario,
-    vehiculo: vehiculo,
     patenteVehiculo: patenteVehiculo,
   });
 
-  let turno = await Turno.save();
+  let turno = await turn.save();
   console.log("turno creado");
   console.log(turno);
   return { turno };

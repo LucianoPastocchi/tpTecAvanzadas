@@ -6,17 +6,13 @@ const turnoSchema = new Schema(
       type: String,
       required: true,
     },
-    usuario: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Usuario",
+    hora: {
+      type: String,
       required: true,
-      default: ["user"],
     },
-    vehiculo: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Vehiculo",
+    usuario: {
+      type: String,
       required: true,
-      default: ["vehiculo"],
     },
     patenteVehiculo: {
       type: String,

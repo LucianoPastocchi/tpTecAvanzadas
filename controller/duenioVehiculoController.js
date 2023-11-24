@@ -14,13 +14,13 @@ const getDuenioVehiculo = async (id) => {
   return duenioVehiculo;
 };
 
-const addDuenioVehiculo = async (DNI, vehiculo) => {
-  const DuenioVehiculo = new DuenioVehiculo({
+const addDuenioVehiculo = async (DNI, patente) => {
+  const duenio = new DuenioVehiculo({
     DNI: DNI,
-    vehiculo: vehiculo,
+    patente: patente,
   });
 
-  let duenioVehiculo = await DuenioVehiculo.save();
+  let duenioVehiculo = await duenio.save();
   console.log("duenio vehiculo creado");
   console.log(duenioVehiculo);
   return { duenioVehiculo };
