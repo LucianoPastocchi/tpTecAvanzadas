@@ -4,7 +4,7 @@ const turnoSchema = new Schema(
   {
     nroTurno: {
       type: String,
-      required: true,
+      required: false,
     },
     fecha: {
       type: String,

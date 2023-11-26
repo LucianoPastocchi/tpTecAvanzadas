@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Header = (props) => {
   const navigate = useNavigate();
+
   return (
     <HeaderContainer>
       <div className="logo">

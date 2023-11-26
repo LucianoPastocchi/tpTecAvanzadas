@@ -13,7 +13,7 @@ const usrSchema = new Schema(
     },
     fecNacimiento: {
       type: String,
-      required: true,
+      required: false,
     },
     rol: {
       type: Array,

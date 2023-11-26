@@ -13,6 +13,7 @@ const VehiculoController = require("./controller/vehiculoController.js");
 const DuenioVehiculoController = require("./controller/duenioVehiculoController.js");
 const ResultadoController = require("./controller/resultadoController.js");
 const ChequeoController = require("./controller/chequeoController.js");
+const AuthController = require("./controller/authController.js");
 
 //Conexión a la base
 mongoose
