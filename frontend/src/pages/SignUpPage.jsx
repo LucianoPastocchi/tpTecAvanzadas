@@ -12,18 +12,15 @@ const SignUpPage = () => {
   });
 
   const email = useRef("");
-  const name = useRef("");
-  const lastname = useRef("");
+  const fecNacimiento = useRef("");
   const password = useRef("");
 
   const userData = {
     email: email.current.value,
-    name: name.current.value,
-    lastname: lastname.current.value,
+    fecNacimiento: fecNacimiento.current.value,
     isActive: true,
     roles: "user",
     password: password.current.value,
-    myCharacters: 0,
   };
 
   const navigate = useNavigate();
@@ -65,12 +62,12 @@ const SignUpPage = () => {
         <Header login />
         <div className="body">
           <div className="text">
-            <h1>Crea tu propio personaje</h1>
+            <h1>Revisión vehicular anual</h1>
           </div>
           <div className="form">
             <input
               type="email"
-              placeholder="email"
+              placeholder="Ingrese su correo electrónico"
               name="email"
               value={formValues.email}
               ref={email}
@@ -82,34 +79,21 @@ const SignUpPage = () => {
               }
             />
             <input
-              type="name"
-              placeholder="name"
-              name="name"
-              value={formValues.name}
-              ref={name}
+              type="date"
+              placeholder="Ingrese su fecha de nacimiento"
+              name="fecNacimiento"
+              value={formValues.fecNacimiento}
+              ref={fecNacimiento}
               onChange={(e) =>
                 setFormValues({
                   ...formValues,
-                  [e.target.name]: e.target.value,
-                })
-              }
-            />
-            <input
-              type="lastname"
-              placeholder="lastname"
-              name="lastname"
-              value={formValues.lastname}
-              ref={lastname}
-              onChange={(e) =>
-                setFormValues({
-                  ...formValues,
-                  [e.target.name]: e.target.value,
+                  [e.target.fecNacimiento]: e.target.value,
                 })
               }
             />
             <input
               type="password"
-              placeholder="password"
+              placeholder="Ingrese contraseña"
               name="password"
               value={formValues.password}
               ref={password}
@@ -135,7 +119,7 @@ const Container = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.79);
+    background-color: rgba(0, 0, 0, 0.6);
     height: 100vh;
     width: 100vw;
     grid-template-columns: 15vh 85vh;
@@ -151,7 +135,7 @@ const Container = styled.div`
     flex-direction: column;
     text-align: center;
     font-size: 2rem;
-    color: white;
+    color: yellow;
     h1 {
       padding: 0rem 20rem;
     }
@@ -166,26 +150,30 @@ const Container = styled.div`
     display: grid;
     width: 60%;
     margin-top: 1.5rem;
-    grid-template-columns: "1fr 1fr";
+    grid-template-columns: "1fr";
   }
   input {
     color: black;
-    padding: 1.5rem;
-    font-size: 1.2rem;
-    width: 45rem;
+    padding: 2rem;
+    font-size: 1rem;
+    width: 30rem;
     &:focus {
       outline: none;
     }
+    margin: 20px;
+    border: solid black;
+    background-color: yellow;
   }
 
   button {
     padding: 0.5rem 1rem;
-    background-color: red;
+    background-color: yellow;
     border: none;
     cursor: pointer;
-    color: white;
+    color: black;
     font-size: 1.05rem;
     width: 20rem;
+    font-weight: bolder;
   }
 `;
 

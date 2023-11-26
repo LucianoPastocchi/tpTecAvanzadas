@@ -87,7 +87,7 @@ const LoginPage = () => {
         <div className="form-wrapper">
           <div className="form">
             <div className="title">
-              <h1>Login</h1>
+              <h1>VTV</h1>
             </div>
             <div className="container">
               <input
@@ -150,10 +150,10 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
     gap: 2rem;
-    background-color: rgba(0, 0, 0, 0.83);
+    background-color: black;
     height: 70vh;
     padding: 2rem;
-    color: white;
+    color: yellow;
     border-radius: 0.4rem;
   }
   .container {
@@ -166,16 +166,17 @@ const Wrapper = styled.div`
       width: 25rem;
       height: 2.4rem;
       outline: none;
+      background-color: yellow;
     }
     button {
       padding: 0.5rem;
-      background-color: red;
+      background-color: yellow;
       border: none;
       cursor: pointer;
       border-radius: 0.4rem;
       height: 3.4rem;
-      color: white;
-      font-weight: border;
+      color: black;
+      font-weight: bolder;
       font-size: 1.05rem;
     }
   }
