@@ -492,7 +492,7 @@ app.get(
     let resultadoId = req.params.id;
 
     try {
-      resultadoId = await ResultadoController.getDuenioVehiculo(resultadoId);
+      resultadoId = await ResultadoController.getResultado(resultadoId);
       res.status(200).json(resultadoId);
     } catch (error) {
       res.status(500).send("Error. Intente más tarde");
