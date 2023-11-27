@@ -16,9 +16,8 @@ const usrSchema = new Schema(
       required: false,
     },
     rol: {
-      type: Array,
+      type: String,
       required: true,
-      default: ["user"],
     },
   },
   { timestamps: true }

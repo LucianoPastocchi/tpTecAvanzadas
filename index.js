@@ -94,12 +94,14 @@ app.post(
     let email = req.body.email;
     let password = req.body.password;
     let fecNacimiento = req.body.fecNacimiento;
+    let rol = req.body.rol;
 
     try {
       const result = await UsrController.addUser(
         email,
         password,
-        fecNacimiento
+        fecNacimiento,
+        rol
       );
       if (result) {
         res.status(201).send("Usuario creado correctamente");

@@ -22,6 +22,11 @@ const turnoSchema = new Schema(
       type: String,
       required: true,
     },
+    puntaje: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
   },
   { timestamps: true }
 ).set("toJSON", {

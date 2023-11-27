@@ -17,10 +17,9 @@ const SignUpPage = () => {
 
   const userData = {
     email: email.current.value,
-    fecNacimiento: fecNacimiento.current.value,
-    isActive: true,
-    roles: "user",
     password: password.current.value,
+    fecNacimiento: fecNacimiento.current.value,
+    rol: "user",
   };
 
   const navigate = useNavigate();

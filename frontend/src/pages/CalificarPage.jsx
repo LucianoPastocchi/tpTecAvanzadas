@@ -1,51 +1,66 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Header from "../components/Header";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import TopNav from "../components/TopNav";
 
-const SignUpPage = () => {
-  const [formValues, setFormValues] = useState({
-    fecha: "",
-    hora: "",
-    DNI: "",
-    patente: "",
-  });
-
-  const turnoData = {};
+const CalificarPage = () => {
+  const [motor, setMotor] = useState(0);
+  const [capot, setCapot] = useState(0);
+  const [chasis, setChasis] = useState(0);
+  const [ruedas, setRuedas] = useState(0);
+  const [aceite, setAceite] = useState(0);
+  const [parabrisas, setParabrisas] = useState(0);
+  const [ventanas, setVentanas] = useState(0);
+  const [puertas, setPuertas] = useState(0);
 
   const navigate = useNavigate();
 
-  const handleTurno = async () => {
-    fetch("http://localhost:4000/turnos/create", {
-      method: "POST",
+  const { turnoId } = useParams();
+
+  const calificar = async () => {
+    let puntajeFinal =
+      parseInt(motor) +
+      parseInt(capot) +
+      parseInt(chasis) +
+      parseInt(ruedas) +
+      parseInt(aceite) +
+      parseInt(parabrisas) +
+      parseInt(ventanas) +
+      parseInt(puertas);
+
+    const puntaje = {
+      puntaje: puntajeFinal,
+    };
+    fetch(`http://localhost:4000/turnos/${turnoId}/edit`, {
+      method: "PUT",
       headers: {
         Accept: "Application/json",
         "Content-type": "Application/json",
       },
 
-      body: JSON.stringify(turnoData),
+      body: JSON.stringify(puntaje),
     })
       .then((response) => {
         response.json();
-        alert("Turno creado correctamente");
-        console.log(JSON.stringify(turnoData));
+        alert("Turno calificado correctamente");
+        console.log(JSON.stringify(puntaje));
         //window.open("login.html");
-        navigate("/login");
+        navigate("/");
         //this.close();
       })
       .then((data) => {
         console.log(data);
       })
       .catch((err) => {
-        console.log("Error al crear el turno", err);
-        alert("Error al crear el turno " + err);
+        console.log("Error al calificar el turno", err);
+        alert("Error al calificar el turno " + err);
       });
   };
 
   return (
     <Container>
       <div className="content">
-        <Header login />
+        <TopNav />
         <div className="body">
           <div className="text">
             <h1>Calificar turno</h1>
@@ -59,12 +74,7 @@ const SignUpPage = () => {
                 name="estadoMotor"
                 min={1}
                 max={10}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    [e.target.fecha]: e.target.value,
-                  })
-                }
+                onChange={(e) => setMotor(e.target.value)}
               />
             </div>
             <div className="input_form">
@@ -74,12 +84,7 @@ const SignUpPage = () => {
                 name="estadoCapot"
                 min={1}
                 max={10}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    [e.target.fecha]: e.target.value,
-                  })
-                }
+                onChange={(e) => setCapot(e.target.value)}
               />
             </div>
             <div className="input_form">
@@ -89,12 +94,7 @@ const SignUpPage = () => {
                 name="estadoChasis"
                 min={1}
                 max={10}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    [e.target.fecha]: e.target.value,
-                  })
-                }
+                onChange={(e) => setChasis(e.target.value)}
               />
             </div>
             <div className="input_form">
@@ -104,80 +104,51 @@ const SignUpPage = () => {
                 name="estadoRuedas"
                 min={1}
                 max={10}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    [e.target.fecha]: e.target.value,
-                  })
-                }
+                onChange={(e) => setRuedas(e.target.value)}
               />
             </div>
             <div className="input_form">
-              <h2>Estado de las ruedas</h2>
+              <h2>Estado del aceite</h2>
               <input
                 type="number"
-                name="estadoRuedas"
+                name="estadoAceite"
                 min={1}
                 max={10}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    [e.target.fecha]: e.target.value,
-                  })
-                }
+                onChange={(e) => setAceite(e.target.value)}
               />
             </div>
             <div className="input_form">
-              <h2>Estado de las ruedas</h2>
+              <h2>Estado del parabrisas</h2>
               <input
                 type="number"
-                name="estadoRuedas"
+                name="estadoParabrisas"
                 min={1}
                 max={10}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    [e.target.fecha]: e.target.value,
-                  })
-                }
+                onChange={(e) => setParabrisas(e.target.value)}
               />
             </div>
             <div className="input_form">
-              <h2>Estado de las ruedas</h2>
+              <h2>Estado de las ventanas</h2>
               <input
                 type="number"
-                name="estadoRuedas"
+                name="estadoVentanas"
                 min={1}
                 max={10}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    [e.target.fecha]: e.target.value,
-                  })
-                }
+                onChange={(e) => setVentanas(e.target.value)}
               />
             </div>
             <div className="input_form">
-              <h2>Estado de las ruedas</h2>
+              <h2>Estado de las puertas</h2>
               <input
                 type="number"
-                name="estadoRuedas"
+                name="estadoPuertas"
                 min={1}
                 max={10}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    [e.target.fecha]: e.target.value,
-                  })
-                }
+                onChange={(e) => setPuertas(e.target.value)}
               />
-            </div>
-
-            <div className="input_form">
-              <h1>PUNTAJE FINAL</h1>
             </div>
           </div>
-          <button onClick={handleTurno}>Calificar</button>
+          <button onClick={calificar}>Calificar</button>
         </div>
       </div>
     </Container>
@@ -194,6 +165,9 @@ const Container = styled.div`
     height: 100vh;
     width: 100vw;
     grid-template-columns: 15vh 85vh;
+    h1 {
+      margin-top: 120px;
+    }
   }
   .body {
     display: flex;
@@ -258,4 +232,4 @@ const Container = styled.div`
   }
 `;
 
-export default SignUpPage;
+export default CalificarPage;

@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FaPlay } from "react-icons/fa";
 import TopNav from "../components/TopNav";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 //import SliderContainer from "../components/SliderContainer";
 
 const HomePage = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [turnos, setTurnos] = useState([]);
+  const data = "";
 
   const getTurnos = async () => {
     try {
@@ -36,7 +37,7 @@ const HomePage = () => {
 
   useEffect(() => {
     getTurnos();
-  });
+  }, []);
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true); //si no scrolleo
@@ -55,9 +56,26 @@ const HomePage = () => {
                 <div className="turno-item" key={turno.id}>
                   <li className="turno-row">{turno.fecha}</li>
                   <li className="turno-row">{turno.hora}</li>
-                  <li>
-                    <button onClick={null}>Calificar</button>
-                  </li>
+                  {turno.puntaje > 0 ? (
+                    <li className="turno-row">
+                      {turno.puntaje > 60 ? "APROBADO" : "DESAPROBADO"}
+                    </li>
+                  ) : (
+                    ""
+                  )}
+
+                  {turno.puntaje > 60 ? (
+                    <li>"TRAMITE FINALIZADO</li>
+                  ) : (
+                    <li>
+                      <Link
+                        className="btn"
+                        to={{ pathname: "/calificar/" + turno.id }}
+                      >
+                        {turno.puntaje > 0 ? "Chequear" : "Calificar"}
+                      </Link>
+                    </li>
+                  )}
                 </div>
               ))}
             </ul>
@@ -88,14 +106,15 @@ const HomeContainer = styled.div`
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     gap: 20px;
   }
 
   .turno-item {
     padding: 10px;
-    width: calc(25% - 20px);
+    width: 100px;
+    margin-right: 10px;
   }
 
   .container {
@@ -106,7 +125,7 @@ const HomeContainer = styled.div`
     height: 100vh;
     width: 100vw;
     grid-template-columns: 15vh 85vh;
-    button {
+    .btn {
       display: flex;
       width: 70px;
       padding: 5px;

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import styled from "styled-components";
@@ -14,7 +14,7 @@ const LoginPage = () => {
     password: password.current.value,
   };
 
-  const getMyCharacters = async () => {
+  const getInfoUsuario = async () => {
     try {
       const response = await fetch(
         `http://localhost:4000/users/${email.current.value}`,
@@ -33,11 +33,7 @@ const LoginPage = () => {
         const data = await response.json();
         console.log("data");
         console.log(data);
-        window.localStorage.setItem(
-          "lastId",
-          JSON.stringify(data.myCharacters)
-        );
-        window.localStorage.setItem("userId", JSON.stringify(data.id));
+        window.localStorage.setItem("rol", JSON.stringify(data.rol[0]));
       }
     } catch (err) {
       console.log("Error al obtener el usuario", err);
@@ -58,14 +54,14 @@ const LoginPage = () => {
       .then((response) => {
         console.log(response.status);
         if (response.status !== 401 && response.status !== 500) {
-          response.json();
+          getInfoUsuario();
           alert("Login correcto");
-          getMyCharacters();
           navigate("/");
           window.localStorage.setItem(
             "loggedUser",
             JSON.stringify(email.current.value)
           );
+          //window.localStorage.setItem("rol");
         } else {
           console.log("Error al logearse");
           alert("Error al logearse ");

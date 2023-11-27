@@ -1,7 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
+import TopNav from "../components/TopNav";
 
 const SignUpPage = () => {
   const [formValues, setFormValues] = useState({
@@ -11,16 +12,15 @@ const SignUpPage = () => {
     patente: "",
   });
 
-  const fecha = useRef("");
+  const fecha = useRef(Date.now());
   const hora = useRef("");
-  const DNI = useRef("");
   const patente = useRef("");
 
   const turnoData = {
     fecha: fecha.current.value,
     hora: hora.current.value,
-    DNI: DNI.current.value,
-    patente: patente.current.value,
+    usuario: window.localStorage.getItem("userId").replace(/['"]+/g, ""),
+    patenteVehiculo: patente.current.value,
   };
 
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ const SignUpPage = () => {
   return (
     <Container>
       <div className="content">
-        <Header login />
+        <TopNav />
         <div className="body">
           <div className="text">
             <h1>Solicitar turno</h1>
@@ -73,7 +73,7 @@ const SignUpPage = () => {
                 onChange={(e) =>
                   setFormValues({
                     ...formValues,
-                    [e.target.fecha]: e.target.value,
+                    [e.target.name]: e.target.value,
                   })
                 }
               />
@@ -85,22 +85,6 @@ const SignUpPage = () => {
                 name="hora"
                 value={formValues.hora}
                 ref={hora}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    [e.target.name]: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div className="input_form">
-              <h2>DNI</h2>
-              <input
-                placeholder="Ingrese DNI"
-                type="text"
-                name="DNI"
-                value={formValues.DNI}
-                ref={DNI}
                 onChange={(e) =>
                   setFormValues({
                     ...formValues,
