@@ -12,21 +12,66 @@ const CalificarPage = () => {
   const [parabrisas, setParabrisas] = useState(0);
   const [ventanas, setVentanas] = useState(0);
   const [puertas, setPuertas] = useState(0);
+  const [descripcion, setDescripcion] = useState("");
 
   const navigate = useNavigate();
 
   const { turnoId } = useParams();
 
+  const crearResultado = async (puntajeFinal) => {
+    const datosResultado = {
+      nroTurno: turnoId,
+      puntaje: puntajeFinal,
+      observacion: descripcion,
+    };
+    fetch(`http://localhost:4000/resultado/create`, {
+      method: "POST",
+      headers: {
+        Accept: "Application/json",
+        "Content-type": "Application/json",
+      },
+
+      body: JSON.stringify(datosResultado),
+    })
+      .then((response) => {
+        response.json();
+        console.log("Resultado creado correctamente");
+        console.log(JSON.stringify(datosResultado));
+        navigate("/");
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log("Error al crear el resultado", err);
+        alert("Error al crear el resultado " + err);
+      });
+  };
+
   const calificar = async () => {
-    let puntajeFinal =
-      parseInt(motor) +
-      parseInt(capot) +
-      parseInt(chasis) +
-      parseInt(ruedas) +
-      parseInt(aceite) +
-      parseInt(parabrisas) +
-      parseInt(ventanas) +
-      parseInt(puertas);
+    let puntajeFinal;
+    if (
+      motor < 5 ||
+      capot < 5 ||
+      chasis < 5 ||
+      ruedas < 5 ||
+      aceite < 5 ||
+      parabrisas < 5 ||
+      ventanas < 5 ||
+      puertas < 5
+    ) {
+      puntajeFinal = 10;
+    } else {
+      puntajeFinal =
+        parseInt(motor) +
+        parseInt(capot) +
+        parseInt(chasis) +
+        parseInt(ruedas) +
+        parseInt(aceite) +
+        parseInt(parabrisas) +
+        parseInt(ventanas) +
+        parseInt(puertas);
+    }
 
     const puntaje = {
       puntaje: puntajeFinal,
@@ -44,9 +89,8 @@ const CalificarPage = () => {
         response.json();
         alert("Turno calificado correctamente");
         console.log(JSON.stringify(puntaje));
-        //window.open("login.html");
+        crearResultado(puntajeFinal);
         navigate("/");
-        //this.close();
       })
       .then((data) => {
         console.log(data);
@@ -147,6 +191,16 @@ const CalificarPage = () => {
                 onChange={(e) => setPuertas(e.target.value)}
               />
             </div>
+            <div className="input_descripcion">
+              <h2>Descripción de la califación</h2>
+              <input
+                className="input_descripcion"
+                type="type"
+                name="descripcion"
+                placeholder="Ingrese la descripción de la califación"
+                onChange={(e) => setDescripcion(e.target.value)}
+              />
+            </div>
           </div>
           <button onClick={calificar}>Calificar</button>
         </div>
@@ -168,6 +222,14 @@ const Container = styled.div`
     h1 {
       margin-top: 120px;
     }
+  }
+  .input_descripcion {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    width: 700px;
+    padding: 20px;
+    margin-top: 5px;
   }
   .body {
     display: flex;

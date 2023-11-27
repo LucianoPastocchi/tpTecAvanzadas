@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { AiOutlineInfoCircle } from "react-icons/ai";
-import { FaPlay } from "react-icons/fa";
 import TopNav from "../components/TopNav";
-import { useNavigate, Link } from "react-router-dom";
-//import SliderContainer from "../components/SliderContainer";
+import { Link } from "react-router-dom";
 
+//AGREGAR OBSERVACION DEL CHEQUEO Y RESULTADO
 const HomePage = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [turnos, setTurnos] = useState([]);
-  const data = "";
+
+  const [rol, setRol] = useState(
+    window.localStorage.getItem("rol").replace(/['"]+/g, "")
+  );
 
   const getTurnos = async () => {
     try {
@@ -56,24 +57,38 @@ const HomePage = () => {
                 <div className="turno-item" key={turno.id}>
                   <li className="turno-row">{turno.fecha}</li>
                   <li className="turno-row">{turno.hora}</li>
-                  {turno.puntaje > 0 ? (
+                  <li className="turno-row">{turno.puntaje}</li>
+                  {turno.puntaje > 0 && (
                     <li className="turno-row">
                       {turno.puntaje > 60 ? "APROBADO" : "DESAPROBADO"}
                     </li>
-                  ) : (
-                    ""
                   )}
 
                   {turno.puntaje > 60 ? (
-                    <li>"TRAMITE FINALIZADO</li>
+                    <li>
+                      <h4>TRAMITE FINALIZADO</h4>
+                    </li>
                   ) : (
                     <li>
-                      <Link
-                        className="btn"
-                        to={{ pathname: "/calificar/" + turno.id }}
-                      >
-                        {turno.puntaje > 0 ? "Chequear" : "Calificar"}
-                      </Link>
+                      {rol === "admin" && (
+                        <div>
+                          {turno.puntaje > 0 ? (
+                            <Link
+                              className="btn"
+                              to={{ pathname: "/chequeo/" + turno.id }}
+                            >
+                              Chequear
+                            </Link>
+                          ) : (
+                            <Link
+                              className="btn"
+                              to={{ pathname: "/calificar/" + turno.id }}
+                            >
+                              Calificar
+                            </Link>
+                          )}
+                        </div>
+                      )}
                     </li>
                   )}
                 </div>
@@ -141,6 +156,9 @@ const HomeContainer = styled.div`
       font-size: 2rem;
       color: yellow;
       margin: 100px;
+    }
+    h4 {
+      color: yellow;
     }
     .playBtn {
       display: flex;

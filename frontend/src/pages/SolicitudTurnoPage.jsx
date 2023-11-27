@@ -40,7 +40,7 @@ const SignUpPage = () => {
         alert("Turno creado correctamente");
         console.log(JSON.stringify(turnoData));
         //window.open("login.html");
-        navigate("/login");
+        navigate("/");
         //this.close();
       })
       .then((data) => {

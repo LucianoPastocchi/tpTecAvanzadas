@@ -15,7 +15,7 @@ function App() {
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/signup" element={<SignUpPage />} />
         <Route exact path="/turno" element={<SolicitudTurnoPage />} />
-        <Route exact path="/chequeo" element={<ChequeoPage />} />
+        <Route exact path="/chequeo/:turnoId" element={<ChequeoPage />} />
         <Route exact path="/calificar/:turnoId" element={<CalificarPage />} />
       </Routes>
     </BrowserRouter>
