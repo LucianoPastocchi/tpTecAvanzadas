@@ -12,8 +12,6 @@ const HomePage = () => {
     window.localStorage.getItem("rol").replace(/['"]+/g, "")
   );
 
-  const navigate = useNavigate();
-
   const getTurnos = async () => {
     try {
       const response = await fetch("http://localhost:4000/turnos", {
@@ -61,6 +59,10 @@ const HomePage = () => {
       });
   };
 
+  const turnosOrdenados = turnos.sort((a, b) => {
+    return new Date(b.fecha) - new Date(a.fecha);
+  });
+
   useEffect(() => {
     getTurnos();
   }, []);
@@ -78,11 +80,28 @@ const HomePage = () => {
           <h1>Turnos</h1>
           <div className="turnosMap">
             <ul className="turnos-list">
-              {turnos.map((turno) => (
+              {turnosOrdenados.map((turno) => (
                 <div className="turno-item" key={turno.id}>
-                  <li className="turno-row">{turno.fecha}</li>
-                  <li className="turno-row">{turno.hora}</li>
-                  <li className="turno-row">{turno.puntaje}</li>
+                  <div className="turno-row">
+                    <h3>Fecha</h3>
+                    <li className="turno-row">{turno.fecha}</li>
+                  </div>
+                  <div className="turno-row">
+                    <h3>Hora</h3>
+                    <li className="turno-row">{turno.hora}</li>
+                  </div>
+                  <div className="turno-row">
+                    <h3>Patente</h3>
+                    <li className="turno-row">{turno.patenteVehiculo}</li>
+                  </div>
+                  <div className="turno-row">
+                    <h3>Puntaje</h3>
+                    {turno.puntaje > 0 ? (
+                      <li className="turno-row">{turno.puntaje}</li>
+                    ) : (
+                      <h4>Por definir</h4>
+                    )}
+                  </div>
                   {turno.puntaje > 0 && (
                     <li className="turno-row">
                       {turno.puntaje > 60 ? "APROBADO" : "DESAPROBADO"}
@@ -116,6 +135,17 @@ const HomePage = () => {
                       )}
                     </li>
                   )}
+                  {turno.puntaje > 0 && (
+                    <li className="turno-row">
+                      <Link
+                        className="btn"
+                        to={{ pathname: "/turnoEdit/" + turno.id }}
+                      >
+                        Editar
+                      </Link>
+                    </li>
+                  )}
+
                   <li className="turno-row">
                     <button
                       className="btn"
