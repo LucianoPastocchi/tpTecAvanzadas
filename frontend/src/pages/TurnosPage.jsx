@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import TopNav from "../components/TopNav";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //AGREGAR OBSERVACION DEL CHEQUEO Y RESULTADO
 const HomePage = () => {
@@ -11,6 +11,8 @@ const HomePage = () => {
   const [rol, setRol] = useState(
     window.localStorage.getItem("rol").replace(/['"]+/g, "")
   );
+
+  const navigate = useNavigate();
 
   const getTurnos = async () => {
     try {
@@ -34,6 +36,29 @@ const HomePage = () => {
       console.log("Error al obtener los turnos", err);
       alert("Error al obtener los turnos" + err);
     }
+  };
+
+  const eliminarTurno = async (turno) => {
+    fetch(`http://localhost:4000/turnos/${turno}/delete`, {
+      method: "DELETE",
+      headers: {
+        Accept: "Application/json",
+        "Content-type": "Application/json",
+      },
+    })
+      .then((response) => {
+        window.location.reload();
+        alert("Turno eliminado correctamente");
+        //window.open("login.html");
+        //this.close();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log("Error al eliminar el turno", err);
+        alert("Error al eliminar el turno " + err);
+      });
   };
 
   useEffect(() => {
@@ -91,6 +116,14 @@ const HomePage = () => {
                       )}
                     </li>
                   )}
+                  <li className="turno-row">
+                    <button
+                      className="btn"
+                      onClick={() => eliminarTurno(turno.id)}
+                    >
+                      Eliminar
+                    </button>
+                  </li>
                 </div>
               ))}
             </ul>
@@ -147,6 +180,8 @@ const HomeContainer = styled.div`
       font-weight: bolder;
       background-color: yellow;
       gap: 2rem;
+      cursor: pointer;
+      margin-top: 30px;
       cursor: pointer;
     }
     h1 {
