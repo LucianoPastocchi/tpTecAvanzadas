@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
-import Header from "../components/Header";
 import { useNavigate, useParams } from "react-router-dom";
 import TopNav from "../components/TopNav";
 
-const TurnoEdit = () => {
+const TurnoEditPage = () => {
   const [formValues, setFormValues] = useState({
     fecha: "",
     hora: "",
@@ -195,4 +194,4 @@ const Container = styled.div`
   }
 `;
 
-export default TurnoEdit;
+export default TurnoEditPage;

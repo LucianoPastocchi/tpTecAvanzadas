@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
-import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import TopNav from "../components/TopNav";
 
-const SignUpPage = () => {
+const SolicitudTurnoPage = () => {
   const [formValues, setFormValues] = useState({
     fecha: "",
     hora: "",
@@ -193,4 +192,4 @@ const Container = styled.div`
   }
 `;
 
-export default SignUpPage;
+export default SolicitudTurnoPage;

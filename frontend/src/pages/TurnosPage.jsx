@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import TopNav from "../components/TopNav";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //AGREGAR OBSERVACION DEL CHEQUEO Y RESULTADO
-const HomePage = () => {
+const TurnosPage = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [turnos, setTurnos] = useState([]);
 
@@ -257,4 +257,4 @@ const HomeContainer = styled.div`
   }
 `;
 
-export default HomePage;
+export default TurnosPage;
