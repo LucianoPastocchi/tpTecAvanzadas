@@ -33,7 +33,7 @@ const LoginPage = () => {
         const data = await response.json();
         console.log("data");
         console.log(data);
-        window.localStorage.setItem("rol", JSON.stringify(data.rol[0]));
+        window.localStorage.setItem("rol", JSON.stringify(data.rol));
       }
     } catch (err) {
       console.log("Error al obtener el usuario", err);

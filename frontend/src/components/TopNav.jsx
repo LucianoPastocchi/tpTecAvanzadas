@@ -1,5 +1,4 @@
-import React from "react";
-import { AiOutlineLogout } from "react-icons/ai";
+import { React, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 //import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -18,10 +17,17 @@ const TopNav = ({ isScrolled }) => {
     },
   ];
 
-  // const navigate = useNavigate();
-  // //onAuthStateChanged(firebaseAuth, (currentUser) => {
-  //   if (!currentUser) navigate("/login");
-  // });
+  const navLinksAdmin = [
+    {
+      name: "Home",
+      link: "/",
+    },
+  ];
+
+  const [rol, setRol] = useState(
+    window.localStorage.getItem("rol").replace(/['"]+/g, "")
+  );
+
   return (
     <NavContainer>
       <nav className={`${isScrolled ? "scrolled" : "notScroll"}`}>
@@ -29,20 +35,31 @@ const TopNav = ({ isScrolled }) => {
           <div className="logo">
             <h2>VTV</h2>
           </div>
-          <ul className="links">
-            {navLinks.map(({ name, link }) => {
-              return (
-                <li key={name}>
-                  <Link to={link}>{name}</Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className="rightSide">
-          {/* <button onClick={() => signOut(firebaseAuth)}>
-            <AiOutlineLogout />
-          </button> */}
+          {rol === "user" ? (
+            <div>
+              <ul className="links">
+                {navLinks.map(({ name, link }) => {
+                  return (
+                    <li key={name}>
+                      <Link to={link}>{name}</Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ) : (
+            <div>
+              <ul className="links">
+                {navLinksAdmin.map(({ name, link }) => {
+                  return (
+                    <li key={name}>
+                      <Link to={link}>{name}</Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
         </div>
       </nav>
     </NavContainer>
